@@ -40,12 +40,36 @@ def evaluate_grades(data):
     
     # TODO: a) Check if all scores are percentage based (0-100)
     for assignment in data: 
-        if 0 < assignment["score"] > 100:
+        if not 0 < assignment["score"] < 100:
             print("ERROR: Invalid Score; Score must be between 0 and 100")
             sys.exit(1)
     print("Great!! Lets Continue")
         
     # TODO: b) Validate total weights (Total=100, Summative=40, Formative=60)
+     
+    formative_total = 0
+    summative_total = 0    
+
+    for assignment in data:
+        if assignment["group"] == "Formative":
+            formative_total += assignment["weight"]
+        elif assignment["group"] == "Summative":
+            summative_total += assignment["weight"]
+        else: 
+            print(f"WARNING: {assignment["group"]} is an UNKNOWN GROUP. Expected Group(Formative or Summative)")
+
+    total_weight = formative_total + summative_total
+
+    if formative_total != 60:
+        print(f"ERROR: The formative total sums up to {formative_total}, but they must add up to 60")
+        sys.exit(1)
+    if summative_total != 40: 
+        print(f"ERROR: The Summative total sums up to {summative_total}, but they must add up to 40")
+        sys.exit(1)
+    if total_weight != 100:
+        print(f"ERROR: The total_weight sums up to {total_weight}, but they must add up to 100")
+        sys.exit(1)
+
     # TODO: c) Calculate the Final Grade and GPA
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
     # TODO: e) Check for failed formative assignments (< 50%)
