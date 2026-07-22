@@ -1,7 +1,9 @@
 import csv
 import sys
 import os
-
+print("===============================")
+print("        GRADE EVALUATOR        ")
+print("===============================")
 def load_csv_data():
     """
     Prompts the user for a filename, checks if it exists, 
@@ -164,13 +166,34 @@ def evaluate_grades(data=[]):
     print("\nAssignment(s) recommended for resubmission:")
 
     for assignment in assignment_with_highest_weight:
-        print(f"- {assignment} (Weight: {max_weight}%)")
+        print(f"- {assignment} (Weight: {highest_weight}%)")
 
     # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
+    print()
+    print("================REPORT===================")
+    print(f"Formative grades: {formative_grades:.2f} with Formative Percentage: {formative_percentage:.2f}")
+    print(f"Summative grades: {summative_grades:.2f} with Summative Percentage: {summative_percentage:.2f}")
     
+    print(f"Total grade: {total_contribution} ")
+    print()
+    print("----------Category Status------------")
+    print(f"Formative:{'PASS' if formative_percentage >= 50 else 'FAIL'}")
+    print(f"Summative:{'PASS' if summative_percentage >= 50 else 'FAIL'}")
+    print()
+    print("-----------Final Decision---------------")
+    if formative_percentage >= 50 and summative_percentage >= 50: 
+        print("STATUS: PASS")
+    else:
+        print("STATUS: FAIL")
+    print()
+    print("-------------Resubmission----------------")
+    print("\nAssignment(s) recommended for resubmission:")
     
-    pass
-
+    for assignment in assignment_with_highest_weight:
+            print(f"- {assignment} (Weight: {highest_weight}%)")
+    print()
+    print("--------THE END----------")
+    
 if __name__ == "__main__":
     # 1. Load the data
     course_data = load_csv_data()
