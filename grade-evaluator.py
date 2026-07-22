@@ -31,12 +31,15 @@ def load_csv_data():
         print(f"An error occurred while reading the file: {e}")
         sys.exit(1)
 
-def evaluate_grades(data):
+def evaluate_grades(data=[]):
     """
     Implement your logic here.
     'data' is a list of dictionaries containing the assignment records.
     """
     print("\n--- Processing Grades ---")
+    if not data: 
+        print("CSV file is empty")
+        return data
     
     # TODO: a) Check if all scores are percentage based (0-100)
     for assignment in data: 
@@ -53,6 +56,7 @@ def evaluate_grades(data):
     for assignment in data:
         if assignment["group"] == "Formative":
             formative_total += assignment["weight"]
+
         elif assignment["group"] == "Summative":
             summative_total += assignment["weight"]
         else: 
@@ -70,7 +74,32 @@ def evaluate_grades(data):
         print(f"ERROR: The total_weight sums up to {total_weight}, but they must add up to 100")
         sys.exit(1)
 
+    print()
     # TODO: c) Calculate the Final Grade and GPA
+    formative_grades = 0 
+    summative_grades = 0 
+
+    for assignment in data: 
+        total_contribution = (assignment["score"] * assignment["weight"]) / 100 
+        if assignment["group"] == "Formative": 
+            formative_grades += total_contribution
+        elif assignment["group"] == "Summative":
+            summative_grades += total_contribution
+
+    total_contribution = formative_grades + summative_grades
+
+    print(f"The Formative grades are: {formative_grades}")
+    print()
+    print(f"The Summative grades are: {summative_grades}")
+    print()
+    print(f"The Final grades are: {total_contribution}")
+    print("-------------------")
+
+    GPA =  (total_contribution / 100) * 5
+    print(f"The GPA is: {GPA}")
+
+
+
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
     # TODO: e) Check for failed formative assignments (< 50%)
     #          and determine which one(s) have the highest weight for resubmission.
