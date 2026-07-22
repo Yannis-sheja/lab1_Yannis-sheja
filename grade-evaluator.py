@@ -48,7 +48,8 @@ def evaluate_grades(data=[]):
         if not 0 < assignment["score"] < 100: # if it is not between 0 and 100 it will return an error 
             print("ERROR: Invalid Score; Score must be between 0 and 100")
             sys.exit(1)#to exit the code 
-    print("True. Great!! Lets Continue")
+    print("True") 
+    print("Great!! Lets Continue")
         
     # TODO: b) Validate total weights (Total=100, Summative=40, Formative=60)
      
@@ -106,7 +107,7 @@ def evaluate_grades(data=[]):
 
     #GPA = (Final grade / 100) * 5 
     GPA =  (total_contribution / 100) * 5.00
-    print(f"The GPA is: {GPA}")
+    print(f"The GPA is: {GPA:.2f}")
 
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
     #We are going to the percentage below for getting the Pass/Fail status 
@@ -132,8 +133,41 @@ def evaluate_grades(data=[]):
 
     
     # TODO: e) Check for failed formative assignments (< 50%)
-    #          and determine which one(s) have the highest weight for resubmission.
+    #        and determine which one(s) have the highest weight for resubmission.
+    assignment_failed = {}
+
+    for assignment in data:
+        if assignment["group"] == "Formative" and assignment["score"] < 50:
+            assignment_failed[assignment["assignment"]] = assignment["weight"]
+
+    assignment_with_highest_weight = []
+    highest_weight = 0
+
+    if not assignment_failed:
+        print("There are zero lessons failed!")
+
+    else:
+        for key, value in assignment_failed.items():
+
+            if not assignment_with_highest_weight:
+                assignment_with_highest_weight.append(key)
+                highest_weight = value
+
+            else:
+                if value > highest_weight:
+                    assignment_with_highest_weight = [key]
+                    highest_weight = value
+
+                elif value == highest_weight:
+                    assignment_with_highest_weight.append(key)
+
+    print("\nAssignment(s) recommended for resubmission:")
+
+    for assignment in assignment_with_highest_weight:
+        print(f"- {assignment} (Weight: {max_weight}%)")
+
     # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
+    
     
     pass
 
