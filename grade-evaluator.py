@@ -71,9 +71,11 @@ def evaluate_grades(data=[]):
     if formative_total != 60:  #!= : simply means not equal to 
         print(f"ERROR: The formative total sums up to {formative_total}, but they must add up to 60")
         sys.exit(1) 
+
     if summative_total != 40: 
         print(f"ERROR: The Summative total sums up to {summative_total}, but they must add up to 40")
         sys.exit(1)
+
     if total_weight != 100:
         print(f"ERROR: The total_weight sums up to {total_weight}, but they must add up to 100")
         sys.exit(1)
@@ -86,8 +88,10 @@ def evaluate_grades(data=[]):
     for assignment in data: 
         #Final grade = (Score * weight) / 100
         total_contribution = (assignment["score"] * assignment["weight"]) / 100 
+
         if assignment["group"] == "Formative": 
             formative_grades += total_contribution
+
         elif assignment["group"] == "Summative":
             summative_grades += total_contribution
 
@@ -104,9 +108,29 @@ def evaluate_grades(data=[]):
     GPA =  (total_contribution / 100) * 5.00
     print(f"The GPA is: {GPA}")
 
-
-
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
+    #We are going to the percentage below for getting the Pass/Fail status 
+    formative_percentage = (formative_grades / 60) * 100
+    summative_percentage = (summative_grades / 40) * 100
+
+    #
+    if formative_percentage >= 50: 
+        print(f"The Formative Percentage is: {formative_percentage:.2f} %")
+        print("PASS")
+    else:
+        print(f"Your Formative percentage is: {formative_percentage:.2f} %")
+        print("FAIL. Your Percentage is below 50 ")
+
+    if summative_percentage >= 50: 
+         print(f"The Summative Percentage is: {summative_percentage:.2f} %")
+         print("PASS")
+    else:
+         print(f"Your Summative percentage is: {summative_percentage:.2f} %")
+         print("FAIL. Your Percentage is below 50 ")
+
+        
+
+    
     # TODO: e) Check for failed formative assignments (< 50%)
     #          and determine which one(s) have the highest weight for resubmission.
     # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
