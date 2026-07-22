@@ -47,7 +47,7 @@ def evaluate_grades(data=[]):
     # TODO: a) Check if all scores are percentage based (0-100)
     for assignment in data: 
         # We go through the assignment and make sure that the score is between 0 and 100
-        if not 0 < assignment["score"] < 100: # if it is not between 0 and 100 it will return an error 
+        if not 0 <= assignment["score"] <= 100: # if it is not between 0 and 100 it will return an error 
             print("ERROR: Invalid Score; Score must be between 0 and 100")
             sys.exit(1)#to exit the code 
     print("True") 
@@ -67,7 +67,7 @@ def evaluate_grades(data=[]):
             summative_total += assignment["weight"]
         #Other than that it will display the error below 
         else: 
-            print(f"WARNING: {assignment["group"]} is an UNKNOWN GROUP. Expected Group(Formative or Summative)")
+            print(f"WARNING: {assignment['group']} is an UNKNOWN GROUP. Expected Group(Formative or Summative)")
 
     total_weight = formative_total + summative_total
     #Here we need to check if the formative = 60, summative = 40 and the total weight = 100 
@@ -90,25 +90,25 @@ def evaluate_grades(data=[]):
     # Here we want to know the final grades and The GPA. 
     for assignment in data: 
         #Final grade = (Score * weight) / 100
-        total_contribution = (assignment["score"] * assignment["weight"]) / 100 
+        final_grade = (assignment["score"] * assignment["weight"]) / 100 
 
         if assignment["group"] == "Formative": 
-            formative_grades += total_contribution
+            formative_grades += final_grade
 
         elif assignment["group"] == "Summative":
-            summative_grades += total_contribution
+            summative_grades += final_grade
 
-    total_contribution = formative_grades + summative_grades
+    final_grade = formative_grades + summative_grades
 
     print(f"The Formative grades are: {formative_grades}")
     print("----------")
     print(f"The Summative grades are: {summative_grades}")
     print("-------------------")
-    print(f"The Final grades are: {total_contribution}")
+    print(f"The Final grades are: {final_grade}")
     print("-------------------")
 
     #GPA = (Final grade / 100) * 5 
-    GPA =  (total_contribution / 100) * 5.00
+    GPA =  (final_grade / 100) * 5.00
     print(f"The GPA is: {GPA:.2f}")
 
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
@@ -170,11 +170,14 @@ def evaluate_grades(data=[]):
 
     # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
     print()
+    print("==============================================================================")
+    print()
     print("================REPORT===================")
+    print()
     print(f"Formative grades: {formative_grades:.2f} with Formative Percentage: {formative_percentage:.2f}")
     print(f"Summative grades: {summative_grades:.2f} with Summative Percentage: {summative_percentage:.2f}")
     
-    print(f"Total grade: {total_contribution} ")
+    print(f"Total grade: {final_grade} ")
     print()
     print("----------Category Status------------")
     print(f"Formative:{'PASS' if formative_percentage >= 50 else 'FAIL'}")
@@ -187,12 +190,15 @@ def evaluate_grades(data=[]):
         print("STATUS: FAIL")
     print()
     print("-------------Resubmission----------------")
-    print("\nAssignment(s) recommended for resubmission:")
+    print("\nELigible for resubmission:")
     
     for assignment in assignment_with_highest_weight:
-            print(f"- {assignment} (Weight: {highest_weight}%)")
+            print(f"- {assignment}")
     print()
     print("--------THE END----------")
+    print()
+    print("===============================================================================")
+    print()
     
 if __name__ == "__main__":
     # 1. Load the data
