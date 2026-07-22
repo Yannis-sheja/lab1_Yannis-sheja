@@ -37,16 +37,18 @@ def evaluate_grades(data=[]):
     'data' is a list of dictionaries containing the assignment records.
     """
     print("\n--- Processing Grades ---")
+
     if not data: 
         print("CSV file is empty")
         return data
     
     # TODO: a) Check if all scores are percentage based (0-100)
     for assignment in data: 
-        if not 0 < assignment["score"] < 100:
+        # We go through the assignment and make sure that the score is between 0 and 100
+        if not 0 < assignment["score"] < 100: # if it is not between 0 and 100 it will return an error 
             print("ERROR: Invalid Score; Score must be between 0 and 100")
-            sys.exit(1)
-    print("Great!! Lets Continue")
+            sys.exit(1)#to exit the code 
+    print("True. Great!! Lets Continue")
         
     # TODO: b) Validate total weights (Total=100, Summative=40, Formative=60)
      
@@ -54,19 +56,21 @@ def evaluate_grades(data=[]):
     summative_total = 0    
 
     for assignment in data:
-        if assignment["group"] == "Formative":
+        #Adds up the weight where the group is the formative
+        if assignment["group"] == "Formative": #Where the group = formative 
             formative_total += assignment["weight"]
-
+        #Adds up the weight where the group is the summative
         elif assignment["group"] == "Summative":
             summative_total += assignment["weight"]
+        #Other than that it will display the error below 
         else: 
             print(f"WARNING: {assignment["group"]} is an UNKNOWN GROUP. Expected Group(Formative or Summative)")
 
     total_weight = formative_total + summative_total
-
-    if formative_total != 60:
+    #Here we need to check if the formative = 60, summative = 40 and the total weight = 100 
+    if formative_total != 60:  #!= : simply means not equal to 
         print(f"ERROR: The formative total sums up to {formative_total}, but they must add up to 60")
-        sys.exit(1)
+        sys.exit(1) 
     if summative_total != 40: 
         print(f"ERROR: The Summative total sums up to {summative_total}, but they must add up to 40")
         sys.exit(1)
@@ -78,8 +82,9 @@ def evaluate_grades(data=[]):
     # TODO: c) Calculate the Final Grade and GPA
     formative_grades = 0 
     summative_grades = 0 
-
+    # Here we want to know the final grades and The GPA. 
     for assignment in data: 
+        #Final grade = (Score * weight) / 100
         total_contribution = (assignment["score"] * assignment["weight"]) / 100 
         if assignment["group"] == "Formative": 
             formative_grades += total_contribution
@@ -89,13 +94,14 @@ def evaluate_grades(data=[]):
     total_contribution = formative_grades + summative_grades
 
     print(f"The Formative grades are: {formative_grades}")
-    print()
+    print("----------")
     print(f"The Summative grades are: {summative_grades}")
-    print()
+    print("-------------------")
     print(f"The Final grades are: {total_contribution}")
     print("-------------------")
 
-    GPA =  (total_contribution / 100) * 5
+    #GPA = (Final grade / 100) * 5 
+    GPA =  (total_contribution / 100) * 5.00
     print(f"The GPA is: {GPA}")
 
 
