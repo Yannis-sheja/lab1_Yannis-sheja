@@ -162,4 +162,4 @@ Status           = PASSED  if Formative >= 50  AND  Summative >= 50
 
 ---
 
-*African Leadership University — School of Business and Entrepreneurship*
+*African Leadership University*
