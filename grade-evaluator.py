@@ -35,7 +35,6 @@ def load_csv_data():
 
 def evaluate_grades(data=[]):
     """
-    Implement your logic here.
     'data' is a list of dictionaries containing the assignment records.
     """
     print("\n--- Processing Grades ---")
@@ -44,16 +43,18 @@ def evaluate_grades(data=[]):
         print("CSV file is empty")
         return data
     
-    # TODO: a) Check if all scores are percentage based (0-100)
+    # PART 1: CHECK IF ALL SCORES ARE PERCENTAGE BASED(0-100)
+
     for assignment in data: 
         # We go through the assignment and make sure that the score is between 0 and 100
         if not 0 <= assignment["score"] <= 100: # if it is not between 0 and 100 it will return an error 
             print("ERROR: Invalid Score; Score must be between 0 and 100")
             sys.exit(1)#to exit the code 
+
     print("True") 
     print("Great!! Lets Continue")
         
-    # TODO: b) Validate total weights (Total=100, Summative=40, Formative=60)
+    # PART 2: VALIDATING TOTAL WEIGHTS (Total=100, Summative=40, Formative=60)
      
     formative_total = 0
     summative_total = 0    
@@ -84,7 +85,8 @@ def evaluate_grades(data=[]):
         sys.exit(1)
 
     print()
-    # TODO: c) Calculate the Final Grade and GPA
+    # PART 3: CALCULTING THE FINAL GRADE AND GPA 
+
     formative_grades = 0 
     summative_grades = 0 
     # Here we want to know the final grades and The GPA. 
@@ -111,14 +113,15 @@ def evaluate_grades(data=[]):
     GPA =  (final_grade / 100) * 5.00
     print(f"The GPA is: {GPA:.2f}")
 
-    # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
-    #We are going to the percentage below for getting the Pass/Fail status 
+    # PART 4: DETERMATING THE STATUS(PASS/FAIL) IN BOTH CATEGORIES(>= 50% in BOTH categories)
+
+    #We are going to use the percentage below for getting the Pass/Fail status 
     formative_percentage = (formative_grades / 60) * 100
     summative_percentage = (summative_grades / 40) * 100
 
-    #
+    #if the formative_percentage and summative_percentage is greater than 50% then will print 'PASS' or else 'FAIL' 
     if formative_percentage >= 50: 
-        print(f"The Formative Percentage is: {formative_percentage:.2f} %")
+        print(f"The Formative Percentage is: {formative_percentage:.2f} %")# :.2f means from 2 decimal places 
         print("PASS")
     else:
         print(f"Your Formative percentage is: {formative_percentage:.2f} %")
@@ -134,32 +137,43 @@ def evaluate_grades(data=[]):
         
 
     
-    # TODO: e) Check for failed formative assignments (< 50%)
-    #        and determine which one(s) have the highest weight for resubmission.
-    assignment_failed = {}
+    # PART 5: FAILED_FORMATIVES
+
+    #Here we are trying to find the formatives that a person failed(Below 50) and determine the one that has highest weight. 
+
+    assignment_failed = {} #We using dictionaries because we need keys and values 
 
     for assignment in data:
         if assignment["group"] == "Formative" and assignment["score"] < 50:
-            assignment_failed[assignment["assignment"]] = assignment["weight"]
-
+            assignment_failed[assignment["assignment"]] = assignment["weight"] #assignment["assignment"] is the key 
+            # assignment["weight"] is the value
+    # Create an empty list to store the assignment with the highest weight 
     assignment_with_highest_weight = []
+    #Variable to keep track of the highest weight found so far 
     highest_weight = 0
 
+    #If there is no failed assignments
     if not assignment_failed:
         print("There are zero lessons failed!")
 
     else:
-        for key, value in assignment_failed.items():
+        #It loops through each failed assignment and weight
+        for key, value in assignment_failed.items():# assignment_failed.items() is for both th keys and values 
 
+            #If list is empty, store the first failed assignments 
             if not assignment_with_highest_weight:
                 assignment_with_highest_weight.append(key)
                 highest_weight = value
 
             else:
+                #If the asssignment has a higher weight than the current highest, then
+                #replace the old with the new one. 
                 if value > highest_weight:
                     assignment_with_highest_weight = [key]
                     highest_weight = value
 
+                #Otherwise, if assignment has the same highest weight,
+                #add it to list
                 elif value == highest_weight:
                     assignment_with_highest_weight.append(key)
 
@@ -168,7 +182,8 @@ def evaluate_grades(data=[]):
     for assignment in assignment_with_highest_weight:
         print(f"- {assignment} (Weight: {highest_weight}%)")
 
-    # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
+    # PART 6:THE FINAL DECISION
+    #  Print the final decision (PASSED / FAILED) and resubmission options
     print()
     print("==============================================================================")
     print()
