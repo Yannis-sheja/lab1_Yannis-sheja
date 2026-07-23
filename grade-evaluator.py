@@ -118,6 +118,7 @@ def evaluate_grades(data=[]):
     #We are going to use the percentage below for getting the Pass/Fail status 
     formative_percentage = (formative_grades / 60) * 100
     summative_percentage = (summative_grades / 40) * 100
+    total_percentage = (final_grade * 100) / 100 
 
     #if the formative_percentage and summative_percentage is greater than 50% then will print 'PASS' or else 'FAIL' 
     if formative_percentage >= 50: 
@@ -134,9 +135,13 @@ def evaluate_grades(data=[]):
          print(f"Your Summative percentage is: {summative_percentage:.2f} %")
          print("FAIL. Your Percentage is below 50 ")
 
-        
+    if total_percentage >= 50: 
+        print(f"The Percentage is: {total_percentage:.2f} %")
+        print("PASS")
+    else:
+        print(f"Your total percentage is: {total_percentage:.2f} %")
+        print("FAIL. Your Percentage is below 50 ")
 
-    
     # PART 5: FAILED_FORMATIVES
 
     #Here we are trying to find the formatives that a person failed(Below 50) and determine the one that has highest weight. 
@@ -192,7 +197,7 @@ def evaluate_grades(data=[]):
     print(f"Formative grades(60): {formative_grades:.2f} with Formative Percentage: {formative_percentage:.2f}%")
     print(f"Summative grades(40): {summative_grades:.2f} with Summative Percentage: {summative_percentage:.2f}%")
     
-    print(f"Total grade: {final_grade} ")
+    print(f"Total grade: {final_grade} with Percentage: {total_percentage:.2f}% ")
     print()
     print("----------Category Status------------")
     print(f"Formative:{'PASS' if formative_percentage >= 50 else 'FAIL'}")
