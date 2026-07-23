@@ -174,8 +174,8 @@ def evaluate_grades(data=[]):
     print()
     print("================REPORT===================")
     print()
-    print(f"Formative grades: {formative_grades:.2f} with Formative Percentage: {formative_percentage:.2f}")
-    print(f"Summative grades: {summative_grades:.2f} with Summative Percentage: {summative_percentage:.2f}")
+    print(f"Formative grades(60): {formative_grades:.2f} with Formative Percentage: {formative_percentage:.2f}%")
+    print(f"Summative grades(40): {summative_grades:.2f} with Summative Percentage: {summative_percentage:.2f}%")
     
     print(f"Total grade: {final_grade} ")
     print()
