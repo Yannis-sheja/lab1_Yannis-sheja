@@ -10,8 +10,7 @@
 ```
 lab1_Yannis-sheja/
 ├── grade-evaluator.py   # A python script: loading, validation, calculations, resubmission
-├── organizer.sh         # A bash scritp: Archives and Resets the grades.csv file
-├── grades.csv           # Sample grade data(assignment, group, score and weight)
+├── organizer.sh         # A bash scritp: Archives and Resets the grades.csv file          
 └── README.md            # This file
 ```
 ---
@@ -36,6 +35,8 @@ Final Project - Text-Based Game,Summative,60,20
 | `group`      | Category (`type` also accepted) | `Formative` / `Summative` |
 | `score`      | Marks earned                    | 0 – 100                   |
 | `weight`     | Percentage weight               | Positive number           |
+
+Notice: The 'grades.csv' file is not there. The user must create his/her own. 
 
 > **Weight rules enforced by the program:**
 > - Total weights must add up to **100**
