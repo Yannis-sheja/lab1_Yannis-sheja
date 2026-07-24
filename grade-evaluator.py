@@ -21,6 +21,14 @@ def load_csv_data():
         with open(filename, mode='r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
+                if not all([
+                    row["assignment"].strip(),
+                    row["group"].strip(),
+                    row["score"].strip(),
+                    row["weight"].strip()
+                ]):
+                    print("ERROR: Empty or Incomplete row detected ")
+                    sys.exit(1)
                 # Convert numeric fields to floats for calculations
                 assignments.append({
                     'assignment': row['assignment'],
@@ -49,6 +57,7 @@ def evaluate_grades(data=[]):
         # We go through the assignment and make sure that the score is between 0 and 100
         if not 0 <= assignment["score"] <= 100: # if it is not between 0 and 100 it will return an error 
             print("ERROR: Invalid Score; Score must be between 0 and 100")
+            print(f"Invalid Score, {assignment["score"]} for {assignment["assignment"]}")
             sys.exit(1)#to exit the code 
 
     print("True") 
